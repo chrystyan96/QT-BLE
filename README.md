@@ -22,7 +22,9 @@
   
 
 **Outras configs na versão atual desse app**
+
  **Lado do aluno**
+ 
  <img width="484" height="754" alt="image" src="https://github.com/user-attachments/assets/6d9b83bc-c904-422f-869d-cc64ed6a794e" />
   1. Secret ID do estudante
      - É a chave secreta individual de cada aluno.
