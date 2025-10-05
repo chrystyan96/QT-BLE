@@ -26,6 +26,7 @@
  **Lado do aluno**
  
  <img width="484" height="754" alt="image" src="https://github.com/user-attachments/assets/6d9b83bc-c904-422f-869d-cc64ed6a794e" />
+ 
   1. Secret ID do estudante
      - É a chave secreta individual de cada aluno.
      - Calculado como:
@@ -49,6 +50,7 @@
   3. Tempo para gerar uma nova Secret ID (rollingPeriodSec)
  
  **Lado do professor:**
+ 
  <img width="484" height="754" alt="image" src="https://github.com/user-attachments/assets/3893fb2a-d3c5-413a-b2e2-306f0ec2f539" />
  
  1. Carrega alguns alunos padrões
