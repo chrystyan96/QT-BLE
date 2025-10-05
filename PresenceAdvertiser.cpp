@@ -14,6 +14,28 @@ PresenceAdvertiser::~PresenceAdvertiser() {
     stop();
 }
 
+// Aceita secret em texto/hex/base64 e retorna os BYTES corretos
+static QByteArray parseSecretFlexible(const QByteArray& in)
+{
+    QByteArray trimmed = in.trimmed();
+    const bool looksB64 = trimmed.contains('=') || trimmed.contains('+') || trimmed.contains('/');
+    auto isHexChars = [](const QByteArray& s){
+        for (auto c : s) {
+            if (!((c>='0'&&c<='9')||(c>='A'&&c<='F')||(c>='a'&&c<='f'))) return false;
+        }
+        return true;
+    };
+    if (looksB64) {
+        QByteArray b = QByteArray::fromBase64(trimmed);
+        if (!b.isEmpty()) return b;
+    }
+    if ((trimmed.size()%2)==0 && isHexChars(trimmed)) {
+        QByteArray b = QByteArray::fromHex(trimmed);
+        if (!b.isEmpty()) return b;
+    }
+    return trimmed; // texto puro
+}
+
 void PresenceAdvertiser::configure(quint16 courseId,
                                    const QByteArray& nonceSessao,
                                    qint64 sessionStartEpochSec,
@@ -27,7 +49,8 @@ void PresenceAdvertiser::configure(quint16 courseId,
     m_courseId     = courseId;
     m_nonce        = nonceSessao;
     m_sessionStart = sessionStartEpochSec;
-    m_secret       = secretAluno;
+    m_secret = parseSecretFlexible(secretAluno);
+    qInfo().nospace() << "[ADV] secret len=" << m_secret.size() << " bytes";
 }
 
 void PresenceAdvertiser::start() {
